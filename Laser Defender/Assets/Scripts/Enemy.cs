@@ -4,12 +4,23 @@ using UnityEngine;
 
 public class Enemy : MonoBehaviour {
 
+    [Header("Enemy stats")]
     [SerializeField] float health = 100f;
     [SerializeField] float shotCounter;
     [SerializeField] float minTimeBetweenShots = 0.2f;
     [SerializeField] float maxTimeBetweenShots = 3f;
-    [SerializeField] GameObject bulletPrefab;
     [SerializeField] float projectileSpeed = 10f;
+    [SerializeField] float explosionLength = 1f;
+
+    [Header("Enemy prefabs")]
+    [SerializeField] GameObject bulletPrefab;
+    [SerializeField] GameObject explosionPrefab;
+    
+    [Header("Enemy sounds")]
+    [SerializeField] AudioClip deathSound;
+    [SerializeField] [Range(0,1)] float deathSoundVolume = 0.7f;
+    [SerializeField] AudioClip shootSound;
+    [SerializeField] [Range(0, 1)] float shootSoundVolume = 0.1f;
     // Start is called before the first frame update
     void Start() {
         shotCounter = Random.Range(minTimeBetweenShots, maxTimeBetweenShots);
@@ -34,6 +45,7 @@ public class Enemy : MonoBehaviour {
                 transform.position,
                 Quaternion.identity) as GameObject;
         bullet.GetComponent<Rigidbody2D>().velocity = new Vector2(0, -projectileSpeed);
+        AudioSource.PlayClipAtPoint(shootSound, Camera.main.transform.position, shootSoundVolume);
     }
 
     private void OnTriggerEnter2D(Collider2D other) {
@@ -47,7 +59,18 @@ public class Enemy : MonoBehaviour {
         health -= damageDealer.GetDamage();
         damageDealer.Hit();
         if (health <= 0) {
-            Destroy(gameObject);
+            Die();
         }
     }
+
+    private void Die() {
+        Destroy(gameObject);
+        GameObject explosion = Instantiate(
+                explosionPrefab,
+                transform.position,
+                Quaternion.identity);
+        Destroy(explosion, explosionLength);
+        AudioSource.PlayClipAtPoint(deathSound, Camera.main.transform.position, deathSoundVolume);
+    }
+
 }

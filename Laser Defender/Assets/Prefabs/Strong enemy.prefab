@@ -115,8 +115,14 @@ MonoBehaviour:
   shotCounter: 0
   minTimeBetweenShots: 0.2
   maxTimeBetweenShots: 3
-  bulletPrefab: {fileID: 4149358552638661458, guid: 7eea65df97eece84d85d7dae75e4a507, type: 3}
   projectileSpeed: 5
+  explosionLength: 1
+  bulletPrefab: {fileID: 4149358552638661458, guid: 7eea65df97eece84d85d7dae75e4a507, type: 3}
+  explosionPrefab: {fileID: 0}
+  deathSound: {fileID: 0}
+  deathSoundVolume: 0.7
+  shootSound: {fileID: 0}
+  shootSoundVolume: 0.1
 --- !u!60 &3662546043133501372
 PolygonCollider2D:
   m_ObjectHideFlags: 0
@@ -220,4 +226,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ef757dfabbdaa084fa291b1f7b2fa79c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damage: 100
+  damage: 200
