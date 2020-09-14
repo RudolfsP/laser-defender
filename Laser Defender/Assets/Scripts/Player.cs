@@ -59,6 +59,10 @@ public class Player : MonoBehaviour {
         AudioSource.PlayClipAtPoint(deathSound, Camera.main.transform.position, deathSoundVolume);
     }
 
+    public int GetHealth() {
+        return health;
+    }
+
     private void Fire() {
         if(Input.GetButtonDown("Fire1")) {
             firingCoroutine = StartCoroutine(FireContinuosly());

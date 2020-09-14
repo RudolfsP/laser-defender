@@ -111,11 +111,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a615546c27ecab9429239833595f4e07, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  scoreValue: 150
   health: 100
-  shotCounter: 0
   minTimeBetweenShots: 0.2
   maxTimeBetweenShots: 3
-  projectileSpeed: 5
+  projectileSpeed: 10
   explosionLength: 1
   bulletPrefab: {fileID: 4149358552638661458, guid: 7eea65df97eece84d85d7dae75e4a507, type: 3}
   explosionPrefab: {fileID: 3441135463371332415, guid: b774caa99ace6b04ea43fab005d389de, type: 3}
