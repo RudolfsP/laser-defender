@@ -40,9 +40,16 @@ public class Player : MonoBehaviour {
 
     private void OnTriggerEnter2D(Collider2D other) {
         DamageDealer damageDealer = other.gameObject.GetComponent<DamageDealer>();
-        if (!damageDealer) { return; }
-        ProcessHit(damageDealer);
+        DropActivator dropActivator = other.gameObject.GetComponent<DropActivator>();
+        if (damageDealer) { ProcessHit(damageDealer); }
+        if (dropActivator) { ProcessCoinCatch(dropActivator); } 
+        
 
+    }
+
+    private void ProcessCoinCatch(DropActivator dropActivator) {
+        FindObjectOfType<GameSession>().AddToScore(dropActivator.GetScoreBonus());
+        dropActivator.Caught();
     }
 
     private void ProcessHit(DamageDealer damageDealer) {

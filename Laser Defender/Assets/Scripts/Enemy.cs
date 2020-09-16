@@ -18,7 +18,14 @@ public class Enemy : MonoBehaviour {
     [Header("Enemy prefabs")]
     [SerializeField] GameObject bulletPrefab;
     [SerializeField] GameObject explosionPrefab;
-    
+
+    [Header("Death")]
+    [SerializeField] GameObject dropPrefab;
+    [SerializeField] int minCoins = 0;
+    [SerializeField] int maxCoins = 1;
+    [SerializeField] float minDropSpeed = 2f;
+    [SerializeField] float maxDropSpeed = 10f;
+
     [Header("Enemy sounds")]
     [SerializeField] AudioClip deathSound;
     [SerializeField] [Range(0,1)] float deathSoundVolume = 0.7f;
@@ -75,6 +82,20 @@ public class Enemy : MonoBehaviour {
                 Quaternion.identity);
         Destroy(explosion, explosionLength);
         AudioSource.PlayClipAtPoint(deathSound, Camera.main.transform.position, deathSoundVolume);
+        SpawnDrops();
+    }
+
+    private void SpawnDrops() {
+        int coinsToDrop = Random.Range(minCoins, ++maxCoins);
+        for(int i = 0; i < coinsToDrop; i++) {
+            GameObject drop = Instantiate(
+            dropPrefab,
+            transform.position,
+            Quaternion.identity) as GameObject;
+            drop.GetComponent<Rigidbody2D>().velocity = new Vector2(0, -Random.Range(minDropSpeed, maxDropSpeed));
+        }
+
+        //AudioSource.PlayClipAtPoint(shootSound, Camera.main.transform.position, shootSoundVolume);
     }
 
 }
