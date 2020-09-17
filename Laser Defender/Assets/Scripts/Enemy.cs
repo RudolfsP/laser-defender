@@ -19,12 +19,9 @@ public class Enemy : MonoBehaviour {
     [SerializeField] GameObject bulletPrefab;
     [SerializeField] GameObject explosionPrefab;
 
-    [Header("Death")]
-    [SerializeField] GameObject dropPrefab;
-    [SerializeField] int minCoins = 0;
-    [SerializeField] int maxCoins = 1;
-    [SerializeField] float minDropSpeed = 2f;
-    [SerializeField] float maxDropSpeed = 10f;
+    [Header("Power Ups")]
+    [SerializeField] List<GameObject> dropList;
+    [SerializeField] [Range(0, 100)] int projectileSpeedPuChance = 10;
 
     [Header("Enemy sounds")]
     [SerializeField] AudioClip deathSound;
@@ -85,7 +82,38 @@ public class Enemy : MonoBehaviour {
         SpawnDrops();
     }
 
+    
     private void SpawnDrops() {
+
+        //go through each possible drop in the list
+        //spawn the drop based on the chance of it spawning
+
+
+        foreach(GameObject drop in dropList) {
+            float minDropSpeed = drop.GetComponent<DropActivator>().GetMinDropSpeed();
+            float maxDropSpeed = drop.GetComponent<DropActivator>().GetMaxDropSpeed();
+
+
+            GameObject d = Instantiate(
+            drop,
+            transform.position,
+            Quaternion.identity) as GameObject;
+            drop.GetComponent<Rigidbody2D>().velocity = new Vector2(0, -Random.Range(minDropSpeed, maxDropSpeed));
+            Debug.Log(drop.GetComponent<Rigidbody2D>().velocity);
+            
+
+        }
+
+        
+        /*
+        foreach(DropActivator drop in dropList) {
+            GameObject d = Instantiate(
+            drop,
+            transform.position,
+            Quaternion.identity) as GameObject;
+            drop.GetComponent<Rigidbody2D>().velocity = new Vector2(0, -Random.Range(minDropSpeed, maxDropSpeed));
+        }
+        
         int coinsToDrop = Random.Range(minCoins, ++maxCoins);
         for(int i = 0; i < coinsToDrop; i++) {
             GameObject drop = Instantiate(
@@ -94,8 +122,7 @@ public class Enemy : MonoBehaviour {
             Quaternion.identity) as GameObject;
             drop.GetComponent<Rigidbody2D>().velocity = new Vector2(0, -Random.Range(minDropSpeed, maxDropSpeed));
         }
-
-        //AudioSource.PlayClipAtPoint(shootSound, Camera.main.transform.position, shootSoundVolume);
+        */
     }
-
+    
 }

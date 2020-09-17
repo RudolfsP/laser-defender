@@ -18,9 +18,10 @@ public class Player : MonoBehaviour {
     [Header("Projectile")]
     [SerializeField] GameObject bulletPrefab;
     [SerializeField] float projectileSpeed = 10f;
-    [SerializeField] float projectileFiringPeriod = 0.1f;
+    [SerializeField] float projectileFiringPeriod = 0.5f;
 
     Coroutine firingCoroutine;
+    GameObject powerUp;
 
     float xMin;
     float xMax;
@@ -42,14 +43,22 @@ public class Player : MonoBehaviour {
         DamageDealer damageDealer = other.gameObject.GetComponent<DamageDealer>();
         DropActivator dropActivator = other.gameObject.GetComponent<DropActivator>();
         if (damageDealer) { ProcessHit(damageDealer); }
-        if (dropActivator) { ProcessCoinCatch(dropActivator); } 
-        
-
+        if (dropActivator) { ProcessItemCatch(dropActivator); } 
     }
 
-    private void ProcessCoinCatch(DropActivator dropActivator) {
+    private void ProcessItemCatch(DropActivator dropActivator) {
+        ProcessExtraLaser();
         FindObjectOfType<GameSession>().AddToScore(dropActivator.GetScoreBonus());
         dropActivator.Caught();
+    }
+
+    private void ProcessExtraLaser() {
+        powerUp = GameObject.FindGameObjectWithTag("ExtraLaser");
+        if (powerUp != null) {
+            if(projectileFiringPeriod > 0.05f) {
+                projectileFiringPeriod -= 0.01f;
+            }   
+        }
     }
 
     private void ProcessHit(DamageDealer damageDealer) {
