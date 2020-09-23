@@ -123,6 +123,10 @@ MonoBehaviour:
   - {fileID: 8053102469229800259, guid: bef48a4f28476bc488d064f79e77503c, type: 3}
   - {fileID: 1931993202574300683, guid: 75c97daf0670e2e47b576dca748d731e, type: 3}
   projectileSpeedPuChance: 10
+  minCoinsDropped: 0
+  maxCoinsDropped: 2
+  minProjectilePuDropped: 0
+  maxProjectilePuDropped: 1
   deathSound: {fileID: 8300000, guid: 6575fce45a1f1cf40a78e951dac83c0f, type: 3}
   deathSoundVolume: 0.424
   shootSound: {fileID: 8300000, guid: e4a6794d6c21fb34da470803721eb0ab, type: 3}

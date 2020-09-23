@@ -107,7 +107,7 @@ MonoBehaviour:
   shootSoundVolume: 0.02
   bulletPrefab: {fileID: 4149358552638661458, guid: 5d93edc58dfa25a46801568608a6c1c3, type: 3}
   projectileSpeed: 25
-  projectileFiringPeriod: 0.32
+  projectileFiringPeriod: 0.3
 --- !u!60 &1152566176668121165
 PolygonCollider2D:
   m_ObjectHideFlags: 0

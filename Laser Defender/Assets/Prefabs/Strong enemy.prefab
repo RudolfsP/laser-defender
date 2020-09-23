@@ -119,11 +119,14 @@ MonoBehaviour:
   explosionLength: 1
   bulletPrefab: {fileID: 4149358552638661458, guid: 0b8d806e2eaf2ff4db65f7c4f17302cd, type: 3}
   explosionPrefab: {fileID: 1134129239631916, guid: 7e48ba6b1b968764490bbc70b66e3fe1, type: 3}
-  dropPrefab: {fileID: 8053102469229800259, guid: bef48a4f28476bc488d064f79e77503c, type: 3}
-  minCoins: 1
-  maxCoins: 3
-  minDropSpeed: 3.5
-  maxDropSpeed: 10
+  dropList:
+  - {fileID: 8053102469229800259, guid: bef48a4f28476bc488d064f79e77503c, type: 3}
+  - {fileID: 1931993202574300683, guid: 75c97daf0670e2e47b576dca748d731e, type: 3}
+  projectileSpeedPuChance: 33
+  minCoinsDropped: 2
+  maxCoinsDropped: 4
+  minProjectilePuDropped: 0
+  maxProjectilePuDropped: 1
   deathSound: {fileID: 8300000, guid: 6575fce45a1f1cf40a78e951dac83c0f, type: 3}
   deathSoundVolume: 0.7
   shootSound: {fileID: 8300000, guid: 242f0cdf428c29b4abdd42887618283d, type: 3}

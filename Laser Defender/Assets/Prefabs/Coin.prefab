@@ -137,5 +137,5 @@ MonoBehaviour:
   scoreBonus: 150
   minItemCount: 0
   maxItemCount: 1
-  minDropSpeed: 2
+  minDropSpeed: 4
   maxDropSpeed: 10

@@ -22,12 +22,22 @@ public class Enemy : MonoBehaviour {
     [Header("Power Ups")]
     [SerializeField] List<GameObject> dropList;
     [SerializeField] [Range(0, 100)] int projectileSpeedPuChance = 10;
+    [SerializeField] int minCoinsDropped = 0;
+    [SerializeField] int maxCoinsDropped = 4;
+    [SerializeField] int minProjectilePuDropped = 0;
+    [SerializeField] int maxProjectilePuDropped = 1;
 
     [Header("Enemy sounds")]
     [SerializeField] AudioClip deathSound;
     [SerializeField] [Range(0,1)] float deathSoundVolume = 0.7f;
     [SerializeField] AudioClip shootSound;
     [SerializeField] [Range(0, 1)] float shootSoundVolume = 0.1f;
+
+    //local variables
+    private const string EXTRALASER = "ExtraLaser";
+    private const string COIN = "Coin";
+
+
     // Start is called before the first frame update
     void Start() {
         shotCounter = Random.Range(minTimeBetweenShots, maxTimeBetweenShots);
@@ -35,6 +45,7 @@ public class Enemy : MonoBehaviour {
 
     // Update is called once per frame
     void Update() {
+        //use Time.deltaTime on projectiles or moving objects from the Update() method
         CountDownAndShoot();
     }
 
@@ -82,47 +93,39 @@ public class Enemy : MonoBehaviour {
         SpawnDrops();
     }
 
-    
     private void SpawnDrops() {
-
         //go through each possible drop in the list
         //spawn the drop based on the chance of it spawning
 
+        foreach (GameObject drop in dropList) {
+            if(drop.tag.Equals(EXTRALASER)) {
+                int currentDropChance = Random.Range(0, 101);
+                if(currentDropChance <= projectileSpeedPuChance) {
+                    GameObject droppedItem = instantiateDroppedItem(drop);
+                }
+            }
 
-        foreach(GameObject drop in dropList) {
-            float minDropSpeed = drop.GetComponent<DropActivator>().GetMinDropSpeed();
-            float maxDropSpeed = drop.GetComponent<DropActivator>().GetMaxDropSpeed();
-
-
-            GameObject d = Instantiate(
-            drop,
-            transform.position,
-            Quaternion.identity) as GameObject;
-            drop.GetComponent<Rigidbody2D>().velocity = new Vector2(0, -Random.Range(minDropSpeed, maxDropSpeed));
-            Debug.Log(drop.GetComponent<Rigidbody2D>().velocity);
-            
+            if(drop.tag.Equals(COIN)) {
+                int coinsToDrop = Random.Range(minCoinsDropped, ++maxCoinsDropped);
+                for (int i = 0; i < coinsToDrop; i++) {
+                    GameObject droppedItem = instantiateDroppedItem(drop);
+                }
+            }
 
         }
+    }
 
-        
-        /*
-        foreach(DropActivator drop in dropList) {
-            GameObject d = Instantiate(
-            drop,
-            transform.position,
-            Quaternion.identity) as GameObject;
-            drop.GetComponent<Rigidbody2D>().velocity = new Vector2(0, -Random.Range(minDropSpeed, maxDropSpeed));
-        }
-        
-        int coinsToDrop = Random.Range(minCoins, ++maxCoins);
-        for(int i = 0; i < coinsToDrop; i++) {
-            GameObject drop = Instantiate(
-            dropPrefab,
-            transform.position,
-            Quaternion.identity) as GameObject;
-            drop.GetComponent<Rigidbody2D>().velocity = new Vector2(0, -Random.Range(minDropSpeed, maxDropSpeed));
-        }
-        */
+    private GameObject instantiateDroppedItem(GameObject drop) {
+        float minDropSpeed = drop.GetComponent<DropActivator>().GetMinDropSpeed();
+        float maxDropSpeed = drop.GetComponent<DropActivator>().GetMaxDropSpeed();
+
+        GameObject d = Instantiate(
+        drop,
+        transform.position,
+        Quaternion.identity) as GameObject;
+        d.GetComponent<Rigidbody2D>().velocity = new Vector2(0, -Random.Range(minDropSpeed, maxDropSpeed));
+
+        return d;
     }
     
 }
